@@ -108,6 +108,29 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
+
+    @Test
+    public void shouldNotBeLessThanTheLimitVolume() { // не может быть меньше нижней границы
+        Radio radio = new Radio();
+        radio.setCurrentVolume(-1);
+
+        int expected = 0;
+        int actual = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotBeGreaterThanTheLimitVolume() { // не может быть больше верхней границы
+        Radio radio = new Radio();
+        radio.setCurrentVolume(11);
+
+        int expected = 0;
+        int actual = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
 // --------------------------------------------------------------------------
 
     @Test
@@ -208,6 +231,29 @@ public class RadioTest {
         radio.setCurrentRadioStation(1);
 
         radio.prev();
+
+        int expected = 0;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void shouldNotBeLessThanTheLimit() { // не может быть меньше нижней границы
+        Radio radio = new Radio();
+        radio.setCurrentRadioStation(-1);
+
+        int expected = 0;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotBeGreaterThanTheLimit() { // не может быть больше верхней границы
+        Radio radio = new Radio();
+        radio.setCurrentRadioStation(10);
 
         int expected = 0;
         int actual = radio.getCurrentRadioStation();
