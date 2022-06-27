@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class RadioTest {
@@ -16,18 +17,18 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldNotIncreaseFromMaxVolume() { //повышение на макс границе
-        Radio radio = new Radio();
-        radio.setCurrentVolume(10);
-
-        radio.increaseVolume();
-
-        int expected = 10;
-        int actual = radio.getCurrentVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
+//    @Test
+//    public void shouldNotIncreaseFromMaxVolume() { //повышение на макс границе
+//        Radio radio = new Radio();
+//        radio.setCurrentVolume(10);
+//
+//        radio.increaseVolume();
+//
+//        int expected = 10;
+//        int actual = radio.getCurrentVolume();
+//
+//        Assertions.assertEquals(expected, actual);
+//    }
 
     @Test
     public void shouldIncreaseVolumeFromMinVolume() { // повышение на мин границе
@@ -120,16 +121,16 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldNotBeGreaterThanTheLimitVolume() { // не может быть больше верхней границы
-        Radio radio = new Radio();
-        radio.setCurrentVolume(11);
-
-        int expected = 0;
-        int actual = radio.getCurrentVolume();
-
-        Assertions.assertEquals(expected, actual);
-    }
+//    @Test
+//   public void shouldNotBeGreaterThanTheLimitVolume() { // не может быть больше верхней границы
+//        Radio radio = new Radio();
+//        radio.setCurrentVolume(11);
+//
+//        int expected = 0;
+//        int actual = radio.getCurrentVolume();
+//
+//        Assertions.assertEquals(expected, actual);
+//    }
 
 // --------------------------------------------------------------------------
 
@@ -254,6 +255,163 @@ public class RadioTest {
     public void shouldNotBeGreaterThanTheLimit() { // не может быть больше верхней границы
         Radio radio = new Radio();
         radio.setCurrentRadioStation(10);
+
+        int expected = 0;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+
+    // ---------------------------------------------- Java-HW11
+
+    @Test
+    public void shouldNotIncreaseFromMaxVolumeIfChangeTo100() { //повышение на макс границе
+        Radio radio = new Radio();
+        radio.setCurrentVolume(100);
+
+        radio.increaseVolume();
+
+        int expected = 100;
+        int actual = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotBeGreaterThanTheLimitVolumeIfChangeTo100() { // не может быть больше верхней границы
+        Radio radio = new Radio();
+        radio.setCurrentVolume(101);
+
+        int expected = 0;
+        int actual = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    //-----------------------
+
+    @Test
+    public void shouldNextToMaxStationIfChangeStationsCount() { // увеличение до макс
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(53);
+
+        radio.next();
+
+        int expected = 54;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNextToMinStationIfChangeStationsCount() { // увеличение на макс границе
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(54);
+
+        radio.next();
+
+        int expected = 0;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNextFromMinStationIfChangeStationsCount() { // увеличение с мин границы
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(0);
+
+        radio.next();
+
+        int expected = 1;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNextInsideTheBordersIfChangeStationsCount() { // увеличение с 1 в рамках границ
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(1);
+
+        radio.next();
+
+        int expected = 2;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void shouldPrevInsideTheBordersIfChangeStationsCount() { // уменьшение с предмакс значения
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(53);
+
+        radio.prev();
+
+        int expected = 52;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPrevFromMaxStationIfChangeStationsCount() { // уменьшение с макс границы
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(54);
+
+        radio.prev();
+
+        int expected = 53;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPrevFromMinStationIfChangeStationsCount() { // уменьшение с мин границы
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(0);
+
+        radio.prev();
+
+        int expected = 54;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldPrevToMinStationIfChangeStationsCount() { // уменьшение с 1 в рамках границ
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(1);
+
+        radio.prev();
+
+        int expected = 0;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void shouldNotBeLessThanTheLimitIfChangeStationsCount() { // не может быть меньше нижней границы
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(-1);
+
+        int expected = 0;
+        int actual = radio.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotBeGreaterThanTheLimitIfChangeStationsCount() { // не может быть больше верхней границы
+        Radio radio = new Radio(55);
+        radio.setCurrentRadioStation(55);
 
         int expected = 0;
         int actual = radio.getCurrentRadioStation();
